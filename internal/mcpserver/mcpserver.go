@@ -80,6 +80,8 @@ type Server struct {
 	confirms  *confirm.Manager
 	token     string
 	modePath  string
+	host      string
+	port      int
 	startedAt time.Time
 	mcpServer *mcp.Server
 }
@@ -135,6 +137,8 @@ func New(cfg *Config) (*Server, error) {
 		subs:      tierb.NewManager(),
 		token:     token,
 		modePath:  cfg.ModePath,
+		host:      cfg.Host,
+		port:      cfg.Port,
 		startedAt: time.Now(),
 	}
 	s.confirms = confirm.NewManager(s.executeKind)
@@ -172,7 +176,7 @@ func (s *Server) Handler() http.Handler {
 
 // ListenAndServe binds and serves. Blocks until the server exits.
 func (s *Server) ListenAndServe() error {
-	addr := fmt.Sprintf("%s:%d", defaultHost, defaultPort)
+	addr := fmt.Sprintf("%s:%d", s.host, s.port)
 	log.Printf("agent daemon listening on %s — %d verbs loaded (mode: %s)",
 		addr, len(s.cat.Verbs), riskgate.GetMode())
 	return http.ListenAndServe(addr, s.Handler())
@@ -755,8 +759,8 @@ func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
 		"ok":            true,
 		"pid":           os.Getpid(),
 		"uptime_s":      time.Since(s.startedAt).Seconds(),
-		"host":          defaultHost,
-		"port":          defaultPort,
+		"host":          s.host,
+		"port":          s.port,
 		"verbs":         len(s.cat.Verbs),
 		"watches":       s.subs.ListActive(),
 		"termux_api":    termuxAPI,

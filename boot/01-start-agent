@@ -1,9 +1,16 @@
 #!/data/data/com.termux/files/usr/bin/sh
 # Install this file at ~/.termux/boot/01-start-agent (chmod +x).
 # Termux:Boot runs everything in that directory on device boot.
+# Launches the Go agent daemon from ~/agent.
+
+# Termux:Boot does not inherit a full environment — set PREFIX/PATH so the
+# daemon and every termux-* subprocess it spawns resolve Termux binaries.
+export PREFIX=/data/data/com.termux/files/usr
+export PATH="$PREFIX/bin:$PREFIX/bin/applets:$PATH"
 
 # Small delay so the filesystem and network are fully up before we start.
 sleep 5
 
 cd ~/agent || exit 1
+mkdir -p logs
 nohup ./agentd >> logs/daemon.out 2>&1 &

@@ -160,4 +160,61 @@ func TestRecoverOrphansCleansPIDFile(t *testing.T) {
 	}
 }
 
+func TestDropOldest(t *testing.T) {
+	pidFile := filepath.Join(t.TempDir(), "pids.json")
+	tierb.SetPIDFile(pidFile)
+
+	// 2000 lines into a 500-slot queue with no consumer: the oldest 1500
+	// must be dropped, the newest 500 retained in order.
+	v := tierBVerb("sensor.stream",
+		[]string{"sh", "-c", "awk 'BEGIN{for(i=1;i<=2000;i++) print i}'"},
+		[]string{}, "text")
+
+	mgr := tierb.NewManager()
+	subID, err := mgr.Start(v, map[string]any{})
+	if err != nil {
+		t.Fatalf("Start: %v", err)
+	}
+
+	// Poll with max_items=0 until the reader drains: consumes nothing, so
+	// every excess line must count as dropped.
+	deadline := time.Now().Add(5 * time.Second)
+	for {
+		polled, err := mgr.Poll(subID, 0)
+		if err != nil {
+			t.Fatalf("Poll: %v", err)
+		}
+		if polled["stopped"] == true {
+			break
+		}
+		if time.Now().After(deadline) {
+			mgr.Stop(subID)
+			t.Fatal("timed out waiting for producer to finish")
+		}
+		time.Sleep(20 * time.Millisecond)
+	}
+
+	final, err := mgr.Poll(subID, 2000)
+	if err != nil {
+		t.Fatalf("final Poll: %v", err)
+	}
+	items, _ := final["items"].([]any)
+	dropped, _ := final["dropped"].(int)
+	if len(items) != tierb.QueueMax {
+		t.Errorf("expected %d retained items, got %d", tierb.QueueMax, len(items))
+	}
+	if want := 2000 - tierb.QueueMax; dropped != want {
+		t.Errorf("expected %d dropped, got %d", want, dropped)
+	}
+	if len(items) == tierb.QueueMax {
+		if first, _ := items[0].(string); first != "1501" {
+			t.Errorf("expected oldest retained item %q, got %q", "1501", first)
+		}
+		if last, _ := items[len(items)-1].(string); last != "2000" {
+			t.Errorf("expected newest retained item %q, got %q", "2000", last)
+		}
+	}
+	mgr.Stop(subID)
+}
+
 func float64Ptr(v float64) *float64 { return &v }
