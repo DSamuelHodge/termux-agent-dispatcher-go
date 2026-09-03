@@ -1,0 +1,590 @@
+# Compact machine catalog. Comments live in docs/verb-catalog.md.
+verbs:
+  battery.status:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-battery-status']
+    args: []
+    parser: json
+    timeout: 10
+  system.info:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-info']
+    args: []
+    parser: text
+    timeout: 10
+  audio.info:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-audio-info']
+    args: []
+    parser: text
+    timeout: 10
+  brightness.get:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-brightness']
+    args: []
+    parser: text
+    timeout: 5
+  volume.get:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-volume']
+    args: []
+    parser: text
+    timeout: 5
+  wifi.connectionInfo:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-wifi-connectioninfo']
+    args: []
+    parser: json
+    timeout: 10
+  wifi.scanInfo:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-wifi-scaninfo']
+    args: []
+    parser: json
+    timeout: 10
+  telephony.deviceInfo:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-telephony-deviceinfo']
+    args: []
+    parser: json
+    timeout: 10
+  telephony.cellInfo:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-telephony-cellinfo']
+    args: []
+    parser: json
+    timeout: 10
+  usb.list:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-usb', '-l']
+    args: []
+    parser: json
+    timeout: 10
+  location.get:
+    direction: perceive
+    tier: A
+    risk: medium
+    command: ['termux-location', '-p', '{provider}', '-r', 'once']
+    args: [provider]
+    parser: json
+    timeout: 30
+  sensor.list:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-sensor', '-l']
+    args: []
+    parser: json
+    timeout: 10
+  sensor.read:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-sensor', '-s', '{name}', '-n', '1']
+    args: [name]
+    parser: json
+    timeout: 15
+  nfc.read:
+    direction: perceive
+    tier: B
+    risk: low
+    command: ['termux-nfc', '-r', '{detail}']
+    args: [detail]
+    parser: json_stream
+    timeout: null
+  infrared.frequencies:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-infrared-frequencies']
+    args: []
+    parser: json
+    timeout: 10
+  contacts.list:
+    direction: perceive
+    tier: A
+    risk: medium
+    command: ['termux-contact-list']
+    args: []
+    parser: json
+    timeout: 15
+  sms.list:
+    direction: perceive
+    tier: A
+    risk: medium
+    command: ['termux-sms-list', '-t', '{type}']
+    args: [type]
+    parser: json
+    timeout: 15
+  call.log:
+    direction: perceive
+    tier: A
+    risk: medium
+    command: ['termux-call-log']
+    args: []
+    parser: json
+    timeout: 10
+  notification.list:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-notification-list']
+    args: []
+    parser: json
+    timeout: 10
+  camera.info:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-camera-info']
+    args: []
+    parser: text
+    timeout: 10
+  tts.engines:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-tts-engines']
+    args: []
+    parser: json
+    timeout: 10
+  clipboard.get:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-clipboard-get']
+    args: []
+    parser: text
+    timeout: 5
+  saf.dirs:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-saf-dirs']
+    args: []
+    parser: text
+    timeout: 10
+  saf.ls:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['termux-saf-ls', '{path}']
+    args: [path]
+    parser: json
+    timeout: 10
+  saf.read:
+    direction: perceive
+    tier: A
+    risk: medium
+    command: ['termux-saf-read', '{uri}']
+    args: [uri]
+    parser: text
+    timeout: 10
+  saf.stat:
+    direction: perceive
+    tier: A
+    risk: medium
+    command: ['termux-saf-stat', '{path}']
+    args: [path]
+    parser: text
+    timeout: 10
+  brightness.set:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-brightness', '{value}']
+    args: [value]
+    parser: none
+    timeout: 5
+  volume.set:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-volume', '{stream}', '{value}']
+    args: [stream, value]
+    parser: none
+    timeout: 5
+  wifi.enable:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-wifi-enable', '{state}']
+    args: [state]
+    parser: none
+    timeout: 5
+  torch.toggle:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-torch', '{state}']
+    args: [state]
+    parser: none
+    timeout: 5
+  vibrate:
+    direction: act
+    tier: A
+    risk: none
+    command: ['termux-vibrate', '-d', '{ms}']
+    args: [ms]
+    parser: none
+    timeout: 5
+  toast.show:
+    direction: act
+    tier: A
+    risk: none
+    command: ['termux-toast', '{text}']
+    args: [text]
+    parser: none
+    timeout: 5
+  wallpaper.set:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-wallpaper', '-f', '{file}']
+    args: [file]
+    parser: none
+    timeout: 10
+  fingerprint.auth:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-fingerprint']
+    args: []
+    parser: text
+    timeout: 30
+  keystore.list:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-keystore', 'list']
+    args: []
+    parser: text
+    timeout: 10
+  keystore.generate:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-keystore', 'generate', '{alias}']
+    args: [alias]
+    parser: none
+    timeout: 10
+  keystore.delete:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-keystore', 'delete', '{alias}']
+    args: [alias]
+    parser: none
+    timeout: 10
+  keystore.sign:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-keystore', 'sign', '{alias}', '{algorithm}']
+    args: [alias, algorithm, data]
+    stdin: data
+    parser: text
+    timeout: 10
+  keystore.verify:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-keystore', 'verify', '{alias}', '{algorithm}', '{signature}']
+    args: [alias, algorithm, signature, data]
+    stdin: data
+    parser: text
+    timeout: 10
+  nfc.write:
+    direction: act
+    tier: B
+    risk: low
+    command: ['termux-nfc', '-w', '-t', '{text}']
+    args: [text]
+    parser: none
+    timeout: null
+  infrared.transmit:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-infrared-transmit', '-f', '{pattern}']
+    args: [pattern]
+    parser: none
+    timeout: 10
+  clipboard.set:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-clipboard-set', '{text}']
+    args: [text]
+    parser: none
+    timeout: 5
+  notification.post:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-notification', '-t', '{title}', '-c', '{content}']
+    args: [title, content]
+    parser: none
+    timeout: 5
+  notification.channel.create:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-notification-channel', '{id}', '{title}']
+    args: [id, title]
+    parser: none
+    timeout: 10
+  notification.channel.delete:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-notification-channel', '-d', '{id}']
+    args: [id]
+    parser: none
+    timeout: 10
+  notification.remove:
+    direction: act
+    tier: A
+    risk: none
+    command: ['termux-notification-remove', '{id}']
+    args: [id]
+    parser: none
+    timeout: 5
+  media.info:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-media-player', 'info']
+    args: []
+    parser: text
+    timeout: 10
+  media.play:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-media-player', 'play', '{file}']
+    args: [file]
+    parser: none
+    timeout: 60
+  media.pause:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-media-player', 'pause']
+    args: []
+    parser: none
+    timeout: 10
+  media.stop:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-media-player', 'stop']
+    args: []
+    parser: none
+    timeout: 10
+  media.scan:
+    direction: act
+    tier: A
+    risk: none
+    command: ['termux-media-scan', '{file}']
+    args: [file]
+    parser: none
+    timeout: 30
+  tts.speak:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-tts-speak', '{text}']
+    args: [text]
+    parser: none
+    timeout: 20
+  sms.send:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-sms-send', '-n', '{number}', '{text}']
+    args: [number, text]
+    parser: none
+    timeout: 15
+  call.place:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-telephony-call', '{number}']
+    args: [number]
+    parser: none
+    timeout: 10
+  camera.photo:
+    direction: act
+    tier: A
+    risk: high
+    command: ['termux-camera-photo', '-c', '{camera_id}', '{outfile}']
+    args: [camera_id, outfile]
+    parser: none
+    timeout: 20
+  storage.get:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-storage-get', '{file}']
+    args: [file]
+    parser: none
+    timeout: 120
+  saf.managedir:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-saf-managedir']
+    args: []
+    parser: text
+    timeout: 120
+  saf.mkdir:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-saf-mkdir', '{parent_uri}', '{name}']
+    args: [parent_uri, name]
+    parser: text
+    timeout: 10
+  saf.create:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-saf-create', '{folder_uri}', '{name}']
+    args: [folder_uri, name]
+    parser: text
+    timeout: 10
+  saf.write:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-saf-write', '{uri}']
+    args: [uri, content]
+    stdin: content
+    parser: none
+    timeout: 10
+  saf.rm:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-saf-rm', '{path}']
+    args: [path]
+    parser: none
+    timeout: 10
+  share.send:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-share', '{file}']
+    args: [file]
+    parser: none
+    timeout: 30
+  download.fetch:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-download', '{url}']
+    args: [url]
+    parser: none
+    timeout: 300
+  sensor.stream:
+    direction: perceive
+    tier: B
+    risk: low
+    command: ['termux-sensor', '-s', '{name}']
+    args: [name]
+    parser: json_stream
+    timeout: null
+  location.watch:
+    direction: perceive
+    tier: B
+    risk: medium
+    command: ['termux-location', '-p', '{provider}', '-r', 'updates']
+    args: [provider]
+    parser: json_stream
+    timeout: null
+  microphone.record:
+    direction: act
+    tier: B
+    risk: high
+    command: ['termux-microphone-record', '-f', '{outfile}', '-l', '{seconds}']
+    args: [outfile, seconds]
+    parser: none
+    timeout: null
+  microphone.stop:
+    direction: act
+    tier: A
+    risk: none
+    command: ['termux-microphone-record', '-q']
+    args: []
+    parser: none
+    timeout: 5
+  microphone.info:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-microphone-record', '-i']
+    args: []
+    parser: text
+    timeout: 5
+  dialog.show:
+    direction: act
+    tier: B
+    risk: low
+    command: ['termux-dialog', '{widget}']
+    args: [widget]
+    parser: json_stream
+    timeout: null
+  stt.listen:
+    direction: perceive
+    tier: B
+    risk: medium
+    command: ['termux-speech-to-text']
+    args: []
+    parser: text
+    timeout: null
+  job.schedule:
+    direction: act
+    tier: B
+    risk: low
+    command: ['termux-job-scheduler', '-s', '{script}', '--job-id', '{job_id}']
+    args: [script, job_id]
+    parser: none
+    timeout: 10
+  job.pending:
+    direction: perceive
+    tier: A
+    risk: none
+    command: ['termux-job-scheduler', '--pending']
+    args: []
+    parser: text
+    timeout: 10
+  job.cancel:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-job-scheduler', '--cancel', '--job-id', '{job_id}']
+    args: [job_id]
+    parser: none
+    timeout: 10
+confirmation_required_for: [high]

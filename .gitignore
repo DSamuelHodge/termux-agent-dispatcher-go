@@ -1,0 +1,25 @@
+# Build artifacts
+agentd
+agentd-android-arm64
+agentd-darwin
+*.exe
+/dist/
+
+# Go
+*.test
+*.out
+coverage.*
+
+# Runtime state — never commit tokens, logs, or databases
+.agent-token
+.autonomy-mode
+logs/
+*.db
+*.db-shm
+*.db-wal
+subscriptions.pids
+audit.log
+
+# Local env / secrets
+.env
+*.pem

@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# Install this file at ~/.termux/boot/01-start-agent (chmod +x).
+# Termux:Boot runs everything in that directory on device boot.
+
+# Small delay so the filesystem and network are fully up before we start.
+sleep 5
+
+cd ~/agent || exit 1
+nohup ./agentd >> logs/daemon.out 2>&1 &
