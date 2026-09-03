@@ -499,6 +499,22 @@ verbs:
     args: [file]
     parser: none
     timeout: 30
+  open.url:
+    direction: act
+    tier: A
+    risk: medium
+    command: ['termux-open', '{url}']
+    args: [url]
+    parser: none
+    timeout: 10
+  open.file:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-open', '{path}']
+    args: [path]
+    parser: none
+    timeout: 10
   download.fetch:
     direction: act
     tier: A
