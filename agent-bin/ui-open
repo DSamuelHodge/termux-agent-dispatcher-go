@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# ui-open: background-safe activity launcher.
+# Android 10+ aborts activity starts from background uids (BAL), which is
+# every dispatcher launch. A visible toast window belonging to our uid
+# exempts the immediately-following start — so: toast, then open, same second.
+# Usage: ui-open <termux-open args...>
+export PATH=/data/data/com.termux/files/usr/bin:$PATH
+termux-toast 'opening...' >/dev/null 2>&1
+exec termux-open "$@"

@@ -42,8 +42,8 @@ func TestLoadRealCatalog(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Load: %v", err)
 	}
-	if len(c.Verbs) != 75 {
-		t.Errorf("expected 75 verbs, got %d", len(c.Verbs))
+	if len(c.Verbs) != 78 {
+		t.Errorf("expected 78 verbs, got %d", len(c.Verbs))
 	}
 	v, err := c.Get("battery.status")
 	if err != nil {

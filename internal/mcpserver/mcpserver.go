@@ -188,7 +188,7 @@ func (s *Server) buildMCPServer() *mcp.Server {
 	srv := mcp.NewServer(
 		&mcp.Implementation{
 			Name:    "termux-agent-dispatcher",
-			Version: "0.1.1",
+			Version: "0.1.2",
 		},
 		nil,
 	)

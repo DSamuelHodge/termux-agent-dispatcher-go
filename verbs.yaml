@@ -208,6 +208,14 @@ verbs:
     args: [path]
     parser: text
     timeout: 10
+  apps.info:
+    direction: perceive
+    tier: A
+    risk: low
+    command: ['/system/bin/pm', 'list', 'packages', '{package}']
+    args: [package]
+    parser: text
+    timeout: 15
   brightness.set:
     direction: act
     tier: A
@@ -503,7 +511,7 @@ verbs:
     direction: act
     tier: A
     risk: medium
-    command: ['termux-open', '{url}']
+    command: ['/data/data/com.termux/files/home/agent/bin/ui-open', '{url}']
     args: [url]
     parser: none
     timeout: 10
@@ -511,8 +519,24 @@ verbs:
     direction: act
     tier: A
     risk: low
-    command: ['termux-open', '{path}']
+    command: ['/data/data/com.termux/files/home/agent/bin/ui-open', '{path}']
     args: [path]
+    parser: none
+    timeout: 10
+  wake.lock:
+    direction: act
+    tier: A
+    risk: low
+    command: ['termux-wake-lock']
+    args: []
+    parser: none
+    timeout: 10
+  wake.unlock:
+    direction: act
+    tier: A
+    risk: none
+    command: ['termux-wake-unlock']
+    args: []
     parser: none
     timeout: 10
   download.fetch:
